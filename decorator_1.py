@@ -24,8 +24,9 @@ def decor_logger(param=None):
             print('В лог будет сохранена следующая запись: ', log_entry)
             #result = LOG.get(key)
             # сохранение результата в файл
-            with open(LOGFILE, 'w', encoding='utf-8') as f:
+            with open(LOGFILE, 'a', encoding='utf-8') as f:
                 json.dump(log_entry, f, ensure_ascii=False, indent=4)
+                json.dump('\n', f, ensure_ascii=False, indent=4)
             print('Лог-запись успешно добавлена в локальный файл:', LOGFILE)
             #print(LOG)
             #return result
