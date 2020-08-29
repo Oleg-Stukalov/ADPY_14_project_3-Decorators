@@ -26,7 +26,7 @@ def decor_logger(param=None):
             # сохранение результата в файл
             with open(LOGFILE, 'a', encoding='utf-8') as f:
                 json.dump(log_entry, f, ensure_ascii=False, indent=4)
-                json.dump('\n', f, ensure_ascii=False, indent=4)
+                f.write('\n')
             print('Лог-запись успешно добавлена в локальный файл:', LOGFILE)
             #print(LOG)
             #return result
@@ -40,13 +40,12 @@ def decor_logger(param=None):
 def concat(str_1, str_2):
     return f'{str_1}{str_2}'
 print(concat('abc', 'erd'), '\n')
-print(concat('abc', 'erd1'), '\n')\
-
-@decor_logger()
-def concat(str_1, str_2):
-    return f'{str_1}{str_2}'
-print(concat('abc', 'erd'), '\n')
 print(concat('abc', 'erd1'), '\n')
+print(concat('abc', 'erd2'), '\n')
+print(concat('abc', 'erd3'), '\n')
+print(concat('abc', 'erd4'), '\n')
+
+
 
 
 
