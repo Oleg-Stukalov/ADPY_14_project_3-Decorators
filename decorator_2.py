@@ -9,44 +9,36 @@ path = input(f'Пожалуйста, введите путь к логам (пр
 path = path or LOG_PATH
 print('Сохраняем логи в папке: ', path)
 
-def pathed_decor_logger(path):
+###def pathed_decor_logger(path):
 
-    def decor_logger(param=None):
-        LOGFILE = f'{path}\log_path.json'
-        #print(LOGFILE)
-        log_entry = None
+def decor_logger(path):
+    LOGFILE = f'{path}\log_path.json'
+    #print(LOGFILE)
+    log_entry = None
 
-        with open(LOGFILE, 'w', encoding='utf-8') as f:
-            json.dump([], f)
+    with open(LOGFILE, 'w', encoding='utf-8') as f:
+        json.dump([], f)
 
-        def _decor_logger(old_function):
-            def new_function(*args, **kwargs):
-                date = str(datetime.now().date())
-                time = str(datetime.now().time())
-                log_entry = f'Date: {date}, Time: {time}, Function name: {old_function.__name__}, Args: {str(args)}, Kwargs: {str(kwargs)};'
-                print('***', type(log_entry))
-                print('В лог будет сохранена следующая запись: ', log_entry)
-                # сохранение результата в файл
-                with open(LOGFILE, 'a', encoding='utf-8') as f:
-                    json.dump(log_entry, f, ensure_ascii=False, indent=4)
-                    f.write('\n')
-                print('Лог-запись успешно добавлена в локальный файл:', LOGFILE)
-            return new_function
-        return _decor_logger
-    return decor_logger
+    def new_function(*args, **kwargs):
+        date = str(datetime.now().date())
+        time = str(datetime.now().time())
+        log_entry = f'Date: {date}, Time: {time}, Function name: {new_function.__name__}, Args: {str(args)}, Kwargs: {str(kwargs)};'
+        print('***', type(log_entry))
+        print('В лог будет сохранена следующая запись: ', log_entry)
+        # сохранение результата в файл
+        with open(LOGFILE, 'a', encoding='utf-8') as f:
+            json.dump(log_entry, f, ensure_ascii=False, indent=4)
+            f.write('\n')
+        print('Лог-запись успешно добавлена в локальный файл:', LOGFILE)
+    return new_function
+#return decor_logger
 
-@pathed_decor_logger(LOG_PATH)
+@decor_logger(LOG_PATH)
 def concat(str_1, str_2):
     return print(f'{str_1}{str_2}')
 print(concat('abc', 'erd'))
-
-
-# @decor_logger()
-# def concat(str_1, str_2):
-#     return f'{str_1}{str_2}'
-# print(concat('abc', 'erd'), '\n')
-# print(concat('abc', 'erd1'), '\n')
-# print(concat('abc', 'erd2'), '\n')
-# print(concat('abc', 'erd3'), '\n')
-# print(concat('abc', 'erd4'), '\n')
+print(concat('abc', 'erd1'), '\n')
+print(concat('abc', 'erd2'), '\n')
+print(concat('abc', 'erd3'), '\n')
+print(concat('abc', 'erd4'), '\n')
 
