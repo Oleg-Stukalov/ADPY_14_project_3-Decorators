@@ -2,7 +2,7 @@ from datetime import datetime
 import json
 
 
-def decor_logger(param=None):
+def decor_logger(old_function):
     LOGFILE = 'log.json'
     #log_entry = None
 
@@ -12,7 +12,10 @@ def decor_logger(param=None):
     def new_function(*args, **kwargs):
         date = str(datetime.now().date())
         time = str(datetime.now().time())
-        log_entry = f'Date: {date}, Time: {time}, Function name: {new_function.__name__}, Args: {str(args)}, Kwargs: {str(kwargs)};'
+        #print('1111111111111')
+        old_result = old_function('abc000', 'erd000')
+        #print('222222222222')
+        log_entry = f'Date: {date}, Time: {time}, Function name: {old_function.__name__}, Args: {str(args)}, Kwargs: {str(kwargs)}, Result: {old_result};'
         #print('***', type(log_entry))
         print('В лог будет сохранена следующая запись: ', log_entry)
         # сохранение результата в файл
@@ -20,19 +23,26 @@ def decor_logger(param=None):
             json.dump(log_entry, f, ensure_ascii=False, indent=4)
             f.write('\n')
         print('Лог-запись успешно добавлена в локальный файл:', LOGFILE)
-        return log_entry
+        return old_result
     return new_function
 
 
 
 @decor_logger
 def concat(str_1, str_2):
+    print('*****', f'{str_1}{str_2}')
     return f'{str_1}{str_2}'
-print(concat('abc', 'erd'), '\n')
-print(concat('abc', 'erd1'), '\n')
-print(concat('abc', 'erd2'), '\n')
-print(concat('abc', 'erd3'), '\n')
-print(concat('abc', 'erd4'), '\n')
+
+concat('abc', 'erd')
+print()
+concat('abc', 'erd1')
+print()
+concat('abc', 'erd2')
+print()
+concat('abc', 'erd3')
+print()
+concat('abc', 'erd4')
+print()
 
 
 
