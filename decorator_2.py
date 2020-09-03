@@ -19,12 +19,14 @@ def decor_logger(path):
     with open(LOGFILE, 'w', encoding='utf-8') as f:
         json.dump([], f)
 
-    def _decor_logger(old_fuction):
+    def _decor_logger(old_function):
 
         def new_function(*args, **kwargs):
             date = str(datetime.now().date())
             time = str(datetime.now().time())
-            log_entry = f'Date: {date}, Time: {time}, Function name: {new_function.__name__}, Args: {str(args)}, Kwargs: {str(kwargs)};'
+            old_result = old_function('abc000', 'erd000')
+            log_entry = f'Date: {date}, Time: {time}, Function name: {old_function.__name__}, Args: {str(args)}, Kwargs: {str(kwargs)}, Result: {old_result};'
+            #print('***', type(log_entry))'
             #print('***', type(log_entry))
             print('В лог будет сохранена следующая запись: ', log_entry)
             # сохранение результата в файл
@@ -33,7 +35,7 @@ def decor_logger(path):
                 f.write('\n')
             print('Лог-запись успешно добавлена в локальный файл:', LOGFILE)
             #print('***', new_function.__name__)
-            return log_entry
+            return old_result
 
         return new_function
 
